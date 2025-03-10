@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\MessageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +13,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ApiResource(paginationItemsPerPage: 10)]
+#[ApiFilter(OrderFilter::class, properties: ['id' => 'ASC', 'titre' => 'ASC', 'datePoste' => 'DESC'])]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'titre' => 'partial', 'datePoste' => 'partial'])]
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message
 {

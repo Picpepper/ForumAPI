@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,6 +15,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ApiResource(paginationItemsPerPage: 5)]
+#[ApiFilter(OrderFilter::class, properties: ['id' => 'ASC', 'pseudonyme' => 'ASC'])]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'pseudonyme' => 'partial', 'roles' => 'exact'])]
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
