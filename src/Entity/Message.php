@@ -18,7 +18,7 @@ class Message
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)] // Titre nullable
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -55,7 +55,7 @@ class Message
         return $this->titre;
     }
 
-    public function setTitre(string $titre): static
+    public function setTitre(?string $titre): static // Modifié pour accepter null
     {
         $this->titre = $titre;
 

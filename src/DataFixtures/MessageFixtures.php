@@ -32,7 +32,7 @@ class MessageFixtures extends Fixture implements DependentFixtureInterface
 
         for ($i = 0; $i < 20; $i++) {
             $message = new Message();
-            $message->setTitre($this->faker->realText(15));  // Génère un titre pour le message enfant
+            $message->setTitre(NULL);
             $message->setDatePoste($this->faker->dateTimeThisYear());
             $message->setContenu($this->faker->realText(200)); // Génère un vrai paragraphe
             $message->setUtilisateur($this->getReference('utilisateur' . mt_rand(0, 9), Utilisateur::class));
