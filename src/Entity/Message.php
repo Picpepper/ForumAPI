@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ApiResource()]
+#[ApiResource(paginationItemsPerPage: 10)]
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message
 {

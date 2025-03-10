@@ -20,7 +20,7 @@ class MessageFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 25; $i++) {
             $message = new Message();
             $message->setTitre($this->faker->realText(15)); // Génère un vrai texte court
             $message->setDatePoste($this->faker->dateTimeThisYear());
@@ -30,7 +30,7 @@ class MessageFixtures extends Fixture implements DependentFixtureInterface
             $this->addReference('message' . $i, $message);
         }
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 40; $i++) {
             $message = new Message();
             $message->setTitre(NULL);
             $message->setDatePoste($this->faker->dateTimeThisYear());

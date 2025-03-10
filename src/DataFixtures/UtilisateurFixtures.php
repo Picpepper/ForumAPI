@@ -24,7 +24,7 @@ class UtilisateurFixtures extends Fixture
     {
         $slugger = new AsciiSlugger();
 
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 35; $i++) {
             $utilisateur = new Utilisateur();
             $utilisateur->setPseudonyme($this->faker->lastName())
                 ->setEmail(strtolower($utilisateur->getPseudonyme()) . '@' . $this->faker->freeEmailDomain())
