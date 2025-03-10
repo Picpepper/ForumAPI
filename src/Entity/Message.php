@@ -30,7 +30,7 @@ class Message
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?self $parent = null;
 
     /**

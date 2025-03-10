@@ -10,3 +10,4 @@
 ###< symfony/framework-bundle ###
 
 /migrations/
+AppFixtures.php
