@@ -30,13 +30,12 @@ class Message
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: true)]
     private ?self $parent = null;
 
     /**
      * @var Collection<int, self>
      */
-    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     private Collection $messages;
 
     public function __construct()
