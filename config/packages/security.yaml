@@ -16,6 +16,14 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            pattern: ^/api
+            stateless: true
+            json_login:
+                username_path: email
+                check_path: /api/authentication_token
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            jwt: ~
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

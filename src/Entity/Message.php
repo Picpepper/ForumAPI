@@ -4,6 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\MessageRepository;
@@ -11,8 +17,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource(paginationItemsPerPage: 10)]
+#[ApiResource(paginationItemsPerPage: 10, operations: [
+    new GetCollection(normalizationContext: ['groups' => 'message:list']),
+    new Post(),
+    new Get(normalizationContext: ['groups' => 'message:item']),
+    new Put(),
+    new Patch(),
+    new Delete(),
+]) ,]
 #[ApiFilter(OrderFilter::class, properties: ['id' => 'ASC', 'titre' => 'ASC', 'datePoste' => 'DESC'])]
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'titre' => 'partial', 'datePoste' => 'partial'])]
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
@@ -21,22 +35,28 @@ class Message
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['message:list', 'message:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50, nullable: true)] // Titre nullable
+    #[Groups(['message:list', 'message:item'])]
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['message:list', 'message:item'])]
     private ?\DateTimeInterface $datePoste = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['message:list', 'message:item'])]
     private ?string $contenu = null;
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['message:list', 'message:item'])]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'messages')]
+    #[Groups(['message:list', 'message:item'])]
     private ?self $parent = null;
 
     /**

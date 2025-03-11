@@ -11,8 +11,14 @@ api_platform:
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
-        extra_properties:
-            standard_put: true
-            rfc_7807_compliant_errors: true
+            extra_properties:
+                standard_put: true
+            normalization_context:
+                skip_null_values: true
+    swagger:
+        api_keys:
+            apiKey:
+                name: Authorization
+                type: header
     keep_legacy_inflector: false
     use_symfony_listeners: true
