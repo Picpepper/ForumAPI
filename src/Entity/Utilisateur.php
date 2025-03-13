@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiFilter;
-use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
@@ -29,7 +29,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     new Put(),
     new Patch(security: "is_granted('ROLE_ADMIN') or object == user"),
     new Delete(),
-]) ,]
+]),]
 #[ApiFilter(OrderFilter::class, properties: ['id' => 'ASC', 'pseudonyme' => 'ASC'])]
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'pseudonyme' => 'partial', 'roles' => 'exact'])]
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
@@ -43,26 +43,29 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    #[Groups(['utilisateur:item'])]
+    #[Groups(['utilisateur:post', 'utilisateur:item'])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Groups(['utilisateur:post', 'utilisateur:item'])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(['utilisateur:post'])]  // Pour inclure le mot de passe uniquement lors de la création
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
-    #[Groups(['utilisateur:list', 'utilisateur:item','message:list', 'message:item'])]
+    #[Groups(['utilisateur:post', 'utilisateur:item', 'utilisateur:list'])]
     private ?string $pseudonyme = null;
-
+    
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['utilisateur:item'])]
     private ?\DateTimeInterface $dateInscription = null;
 
     /**
